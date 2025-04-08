@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "prisma": "^6.5.0"
+  },
+  "scripts": {
+    "dev": "prisma generate && prisma migrate reset --force && tsc && node ./src/js/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0"
+  }
+}
