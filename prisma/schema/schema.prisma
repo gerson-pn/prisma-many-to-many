@@ -1,27 +1,10 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
+  // output          = "../generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
-model Correntista {
-  id   Int    @id @default(autoincrement())
-  nome String
-  cpf  String @unique
-
-  bancos Banco[]
-}
-
-model Banco {
-  id   Int    @id @default(autoincrement())
-  nome String
-  cnpj String @unique
-
-  correntistas Correntista[]
-}
-
-
