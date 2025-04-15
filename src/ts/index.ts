@@ -1,27 +1,5 @@
-import { Banco, PrismaClient, Correntista } from '@prisma/client'
-
-const prisma = new PrismaClient()
-
-const cadastrar = async (correntista: Correntista, banco: Banco) => {
-
-    let resultado = await prisma.correntista.create({
-        data: {
-            nome: correntista.nome,
-            cpf: correntista.cpf,
-            bancos: {
-                create: [{
-                    nome: banco.nome,
-                    cnpj: banco.cnpj
-                }]
-            }
-        }
-    })
-
-    console.log(`Correntista cadastrado:`)
-    console.log(`Nome: ${correntista.nome}, CPF: ${correntista.cpf}`)
-    console.log(`Banco cadastrado:`)
-    console.log(`Nome: ${banco.nome}, CNPJ: ${banco.cnpj}`)
-}
+import { Banco, Correntista } from "@prisma/client"
+import { cadastrarCorrentista, cadastrarCorrentistaBanco, cadastrarCorrentistaBancos, deletarCorrentista, deletarRelacionamentoBanco, obterCorrentistaPorId } from "./crud/correntista/funcoes"
 
 const bb: Banco = {
     id: 0,
@@ -47,4 +25,24 @@ const correntista: Correntista = {
     cpf: "88888888888"
 }
 
-cadastrar(correntista, bb)
+const correntistaNovo: Correntista = {
+    id: 0,
+    nome: "Dom Pedro",
+    cpf: "11111111111"
+}
+
+const correntistaSozinho: Correntista = {
+    id: 0,
+    nome: "Meryl Streep",
+    cpf: "99999999999"
+}
+
+setTimeout(async () => { cadastrarCorrentistaBanco(correntista, bb) }, 1000);
+setTimeout(async () => { cadastrarCorrentistaBancos(correntistaNovo, [caixa, itau]) }, 1000);
+
+setTimeout(async () => { cadastrarCorrentista(correntistaSozinho) }, 3000);
+setTimeout(async () => { obterCorrentistaPorId(1) }, 3000);
+
+setTimeout(async () => { deletarCorrentista(1) }, 5000);
+
+setTimeout(async () => { deletarRelacionamentoBanco(2, 2) }, 10000);
